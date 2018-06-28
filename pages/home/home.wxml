@@ -1,8 +1,11 @@
 <!--home.wxml-->
 <view class="container">
   <view class="header">
-    <text class="title">聊天室</text>
-    <image class="avatar" src="{{avatar}}" />
+    <text class="title">聊天室列表</text>
+    <view class="user">
+      <image class="avatar" src="{{avatar}}" />
+      <text>{{nick}}</text>
+    </view>
   </view>
 
 </view>

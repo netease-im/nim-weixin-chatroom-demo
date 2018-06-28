@@ -23,16 +23,27 @@ page {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  /* align-content: space-around; */
-  padding: 20rpx 30rpx;
+  padding: 32rpx 42rpx;
+  background-color: #f0f3ff;
+  border-bottom: 1rpx solid #ccc;
 }
 
 .header .title {
-  font-size: 48rpx;
-  text-align: left;
+  font-size: 42rpx;
+}
+
+.header .user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 36rpx;
+  color: #666;
 }
 
 .header .avatar {
   width: 64rpx;
   height: 64rpx;
+  margin-right: 10rpx;
+  border-radius: 32rpx;
 }
