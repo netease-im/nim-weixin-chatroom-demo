@@ -1,13 +1,9 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<view class="container center">
+  <view>
+    <image class="logo" src="https://app.netease.im/webdemo/im/images/logo.png" />
+    <view class="label">( 聊天室 )</view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+  <button class="entry" wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 进入聊天室 </button>
+  <view wx:else>请升级微信版本</view>
 </view>
