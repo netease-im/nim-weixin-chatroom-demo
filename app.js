@@ -13,6 +13,7 @@ App({
     })
   },
   globalData: {
+    appkey: '45c6af3c98409b18a84451215d0bdd6e',
     account: null,
     password: 'e10adc3949ba59abbe56e057f20f883e', // 123456的md5
     openid: null,

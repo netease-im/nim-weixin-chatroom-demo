@@ -27,6 +27,7 @@ Page({
     const { detail } = event
     const {userInfo} = detail
     detail.sessionKey = app.globalData.sessionKey
+    console.log(app.globalData.sessionKey)
     auth.wxUploadUserInfo(detail).then(() => {
       wx.setStorageSync('userInfo', userInfo)
       app.globalData.userInfo = userInfo
