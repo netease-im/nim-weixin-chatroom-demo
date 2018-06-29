@@ -1,0 +1,4 @@
+<!--home.wxml-->
+<view class="container">
+  <image class="live-album" src="{{'https://app.netease.im/webdemo/im/chatroom/images/image' + liveid + '.png'}}" mode="widthFix" />
+</view>

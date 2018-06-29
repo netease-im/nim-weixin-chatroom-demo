@@ -19,13 +19,18 @@ page {
 } 
 
 .header {
+  position: fixed;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 32rpx 42rpx;
-  background-color: #f0f3ff;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 42rpx;
+  box-sizing: border-box;
   border-bottom: 1rpx solid #ccc;
+  background-color: #f0f3ff;
 }
 
 .header .title {

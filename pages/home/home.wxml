@@ -7,13 +7,15 @@
       <text>{{nick}}</text>
     </view>
   </view>
-  <scroll-view scroll-y>
     <view class="card-list">
-      <view class="card" wx:key="{{item.roomid}}" wx:for="{{chatroomList}}" wx:for-index="idx">
-        {{item.name}} 
-        <image class="card-logo" src="{{'https://app.netease.im/webdemo/im/chatroom/images/image' + idx + '.png'}}" mode="aspectFit" />
+      <view class="card" wx:key="{{item.roomid}}" wx:for="{{chatroomList}}" wx:for-index="idx" data-roomid="{{item.roomid}}" data-liveid="{{idx}}" bindtap="enterRoom">
+        <image class="card-logo" src="{{'https://app.netease.im/webdemo/im/chatroom/images/image' + idx + '.png'}}" mode="widthFix" />
+        <view class="card-label">
+          <text>{{item.name}}</text>
+          <text class="card-hot">{{item.onlineusercount}}℃</text>
+        </view>
+        <view class="card-anounce">{{item.announcement}}</view>
       </view>
     </view>
-  </scroll-view>
 
 </view>
