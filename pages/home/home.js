@@ -23,12 +23,12 @@ Page({
     wx.request({
       url: pageConfig.chatroomListUrl,
       header: {
-        appkey: app.globalData.appkey,
+        appkey: pageConfig.appkey,
       },
       success: (res) => {
         const { data } = res
         if (data.res === 200) {
-          // console.log(data.msg.list)
+          console.log(data.msg.list)
           this.setData({
             chatroomList: data.msg.list
           })
