@@ -19,7 +19,7 @@
 .chatroom-onlineusercount-wrapper {
   display:flex;
   justify-content:space-between;
-  padding:0 10rpx;
+  padding:0 10rpx 10rpx;
 }
 .chatroom-onlineusercount-name {
   font-size: 30rpx;
