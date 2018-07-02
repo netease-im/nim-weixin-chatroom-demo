@@ -1,13 +1,14 @@
 .card-list {
+  margin-top: 150rpx;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 .card {
-  display: inline-block;
   margin: 20rpx 0;
-  width: 45%;
+  width: 48%;
+  border: 1rpx solid #ccc;
 }
 .card-logo {
   width: 100%;

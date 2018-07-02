@@ -25,9 +25,10 @@ Page({
       header: {
         appkey: app.globalData.appkey,
       },
-      success:(res) => {
+      success: (res) => {
         const { data } = res
         if (data.res === 200) {
+          // console.log(data.msg.list)
           this.setData({
             chatroomList: data.msg.list
           })
@@ -41,6 +42,5 @@ Page({
     wx.navigateTo({
       url: `../chatroom/chatroom?roomid=${chatroom.roomid}&name=${chatroom.name}`,
     })
-    console.log(chatroom)
   }
 })
