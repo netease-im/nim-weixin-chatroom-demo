@@ -8,11 +8,12 @@
   </view>
   <view class="card-list">
     <view class="card" wx:key="{{item.roomid}}" wx:for="{{chatroomList}}" wx:for-item="chatroom" wx:for-index="idx" data-chatroom='{{chatroom}}' catchtap='switchToChatRoom'>
-      <view class='chatroom-title'>{{chatroom.name}}</view> 
       <image class="card-logo" src="{{chatroomImageBaseUrl + 'image' + idx + '.png'}}" mode="widthFix" />
       <view class='chatroom-onlineusercount-wrapper'>
-        <view class='chatroom-onlineusercount-name'>正在直播</view>
-        <view class='chatroom-onlineusercount-num'>{{chatroom.onlineusercount}}人</view>
+        <view class='chatroom-onlineusercount-name'>{{chatroom.name}}</view>
+        <view class='chatroom-onlineusercount-num'>
+          {{chatroom.onlineusercount}}人
+        </view>
       </view>
     </view>
   </view>
