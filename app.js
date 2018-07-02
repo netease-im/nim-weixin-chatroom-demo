@@ -15,10 +15,12 @@ App({
   globalData: {
     account: null,
     password: 'e10adc3949ba59abbe56e057f20f883e', // 123456的md5
+    chatroomServer: [], // 聊天服务器地址
     openid: null,
     sessionKey: null,
     userInfo: null,
     pageConfig: pageConfig,
-    chatroomList: []
+    chatroomList: [],
+    chatroomInstance: null
   }
 })

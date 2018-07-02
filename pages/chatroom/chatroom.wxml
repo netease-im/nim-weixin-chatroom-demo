@@ -78,8 +78,27 @@
     </view>
   </view>
   <view wx:if="{{currentTab == 1}}">
+    <view class='zhubo-wrapper1'>
+      <image src="https://yx-web.nos-hz.163yun.com/webdoc/h5/im/default-icon.png" class='roomInfo-image'></image>
+      <view class='roomInfo-content'>
+        <view class='zhubo-announcement-title'>主播: {{roomInfo.creator}}</view>
+        <view class='zhubo-announcement-content'>在线: {{roomInfo.onlineusercount}}</view>
+      </view>
+    </view>
+    <view class='zhubo-wrapper2'>
+      <view class='zhubo-announcement-title'>公告</view>
+      <view class='line'></view>
+      <view class='zhubo-announcement-content'>{{roomInfo.announcement}}</view>
+    </view>
   </view>
   <view wx:if="{{currentTab == 2}}">
+    <view wx:for="{{onlineMember}}" wx:for-item="member" wx:key="member.account" class='online-item'>
+      <image src="{{member.avatar || 'https://yx-web.nos-hz.163yun.com/webdoc/h5/im/default-icon.png'}}" class='roomInfo-image border-cir'></image>
+      <view class='roomInfo-content'>
+        <view class='zhubo-announcement-title'>{{member.nick}}</view>
+        <view class='zhubo-announcement-content'>{{member.type == 'guest' ? '游客' : ''}}</view>
+      </view>
+    </view>
   </view>
 </view>
   </view>
