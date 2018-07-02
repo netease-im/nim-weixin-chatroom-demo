@@ -1,19 +1,29 @@
-/**home.wxss**/
-
 .card-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
-
 .card {
-    display: inline-block;
-    margin: 20rpx 0;
-    width: 45%;
-    background: #f00;
+  display: inline-block;
+  margin: 20rpx 0;
+  width: 45%;
 }
-
 .card-logo {
   width: 100%;
+}
+.chatroom-title {
+  font-size: 34rpx;
+}
+.chatroom-onlineusercount-wrapper {
+  display:flex;
+  justify-content:space-between;
+  padding:0 10rpx;
+}
+.chatroom-onlineusercount-name {
+  font-size: 30rpx;
+}
+.chatroom-onlineusercount-num {
+  font-size: 30rpx;
+  font-style:italic;
 }

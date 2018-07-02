@@ -1,25 +1,27 @@
-//home.js
-//获取应用实例
 const app = getApp()
-
 Page({
   data: {
-    avatar: 'https://yx-web.nos-hz.163yun.com/webdoc/h5/im/default-icon.png',
-    nick: '匿名',
+    avatar: '',
+    nick: '',
     chatroomList: [],
+    chatroomImageBaseUrl: ''
   },
   onLoad() {
+    let pageConfig = app.globalData.pageConfig
     const userInfo = app.globalData.userInfo
+    let nickName = '匿名'
+    let avatarUrl = pageConfig.defaultAvatar
     if (userInfo) {
-      const { nickName, avatarUrl } = userInfo
-      console.log(userInfo)
-      this.setData({
-        avatar: avatarUrl,
-        nick: nickName
-      })
+      nickName = userInfo.nickName
+      avatarUrl = userInfo.avatarUrl
     }
+    this.setData({
+      avatar: avatarUrl,
+      nick: nickName,
+      chatroomImageBaseUrl: pageConfig.chatroomImageBaseUrl
+    })
     wx.request({
-      url: 'https://app.netease.im/api/chatroom/homeList',
+      url: pageConfig.chatroomListUrl,
       header: {
         appkey: app.globalData.appkey,
       },
@@ -29,8 +31,16 @@ Page({
           this.setData({
             chatroomList: data.msg.list
           })
+          app.globalData.chatroomList = [...data.msg.list]
         }
       }
     })
   },
+  switchToChatRoom(e) {
+    let chatroom = e.currentTarget.dataset.chatroom
+    wx.navigateTo({
+      url: `../chatroom/chatroom?roomid=${chatroom.roomid}&name=${chatroom.name}`,
+    })
+    console.log(chatroom)
+  }
 })

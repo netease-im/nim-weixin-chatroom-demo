@@ -1,6 +1,6 @@
 //app.js
 const auth = require('./utils/auth.js')
-
+import pageConfig from './utils/config.js'
 App({
   onLaunch () {
     console.log('wx login ...')
@@ -19,5 +19,7 @@ App({
     openid: null,
     sessionKey: null,
     userInfo: null,
+    pageConfig: pageConfig,
+    chatroomList: []
   }
 })

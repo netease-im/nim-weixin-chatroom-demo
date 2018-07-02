@@ -1,0 +1,25 @@
+<view class='chatroom-container'>
+  <view class='room-image'>
+    <image src="{{roomImage}}" mode='widthFix'></image>
+  </view>
+  <view class=''>
+    <view class='message-wrapper'>
+  <view class='swiper-tab'>
+    <view class='swiper-tab-item {{currentTab == 0 ? "swiper-tab-item-on" : ""}}' data-current="0" catchtap='switchNav'>直播互动</view>
+    <view class='swiper-tab-item {{currentTab == 1 ? "swiper-tab-item-on" : ""}}' data-current="1" catchtap='switchNav'>主播</view>
+    <view class='swiper-tab-item {{currentTab == 2 ? "swiper-tab-item-on" : ""}}' data-current="2" catchtap='switchNav'>在线成员</view>
+  </view>
+  <view wx:if="{{currentTab == 0}}" style='width: 100%;overflow:hidden;'>
+    <view wx:if="{{chatList.length === 0}}">
+      <text class=''>无更多记录</text>
+    </view>
+    <view wx:if="{{chatList.length !== 0}}" class='chatlist-content'>
+    </view>
+  </view>
+  <view wx:if="{{currentTab == 1}}">
+  </view>
+  <view wx:if="{{currentTab == 2}}">
+  </view>
+</view>
+  </view>
+</view>
