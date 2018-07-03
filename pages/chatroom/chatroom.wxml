@@ -9,18 +9,18 @@
     <view class='swiper-tab-item {{currentTab == 1 ? "swiper-tab-item-on" : ""}}' data-current="1" catchtap='switchNav'>主播</view>
     <view class='swiper-tab-item {{currentTab == 2 ? "swiper-tab-item-on" : ""}}' data-current="2" catchtap='switchNav'>在线成员</view>
   </view>
-  <view wx:if="{{currentTab == 0}}" style='width: 100%;overflow:hidden;'>
+  <view wx:if="{{currentTab == 0}}" style="overflow:scroll;max-height:{{messageWrapperMaxHeight}}px;">
     <view class='chatlist-content'>
-      <view class='chatroom-nocontent'>--无更多记录--</view>
+        <view class='chatroom-nocontent'>
+          --无更多记录--
+        </view>
         <!-- 消息记录 -->
         <view class='record-wrapper' id="recordWrapper"> 
           <view wx:for="{{messageArr}}" wx:for-item="message" wx:key="{{message.time}}">
-            <view class='record-item-time-wrapper' wx:if="{{message.displayTimeHeader != ''}}">
-              <text class='record-item-time'>{{message.displayTimeHeader}}</text>
-            </view> 
             <view class='record-chatting-item other' style='justify-content: {{message.type === "tip" ? "center" : "flex-start"}}' data-message="{{message}}">
-              <image wx:if="{{message.type !== 'tip'}}" catchtap='switchPersonCard' src='{{chatToLogo}}' class='record-chatting-item-img'></image>
-              <text wx:if="{{message.type !== 'tip'}}" class='left-triangle'></text>
+              <view wx:if="{{message.type === 'memberEnter'}}" class='record-item-welcome'>欢迎 {{message.nick}} 进入房间</view>
+              <view wx:elif="{{message.type === 'memberExit'}}" class='record-item-welcome'>{{message.nick}} 离开房间</view>
+              <view wx:elif="{{message.type !== 'tip'}}" class='record-item-time-nick'>{{message.displayTimeHeader}}  {{message.nick}}</view>
               <view wx:if="{{message.type === 'geo'}}" data-geo='{{message.geo}}' class='small-map-wrapper' catchtap='fullScreenMap'>
                 <image src="{{iconBase64Map.iconMap}}" class='small-geo-img'></image>
                 <text class='text'>{{message.geo.title}}</text>
@@ -29,11 +29,7 @@
                 <view class='video-triangle'></view>
                 <view style='color: #000;'>{{message.video.dur / 1000 << 1 >> 1}}''</view>
               </view>
-              <view wx:if="{{message.type === 'audio'}}" data-audio="{{message.audio}}" catchtap='playAudio' class='audio-wrapper'>
-                <image src='{{iconBase64Map.iconVoiceGrey}}' class='image'></image>
-                <text class='text' style='color:#000;'>{{message.audio.dur / 1000 << 1 >> 1}}''</text>
-              </view>
-              <rich-text nodes="{{message.nodes}}" wx:if="{{message.type === 'text' || message.type === 'image' || message.type === '猜拳' || message.type === '贴图表情' || message.type === 'file' || message.type === '白板消息' || message.type === '阅后即焚' || message.type === 'robot'}}" class='record-chatting-item-text' style='color:#000;background-color:#fff;'>{{message.text}}</rich-text>
+              <rich-text nodes="{{message.nodes}}" wx:if="{{message.type === 'text' || message.type === 'image' || message.type === '猜拳' || message.type === '贴图表情' || message.type === 'file' || message.type === '白板消息' || message.type === '阅后即焚' || message.type === 'robot'}}" class='record-chatting-item-text'>{{message.text}}</rich-text>
               <rich-text nodes="{{message.nodes}}" wx:if="{{message.type === 'tip'}}" class='tip-rich-text'>{{message.text}}</rich-text>
             </view>
           </view>
@@ -79,7 +75,7 @@
   </view>
   <view wx:if="{{currentTab == 1}}">
     <view class='zhubo-wrapper1'>
-      <image src="https://yx-web.nos-hz.163yun.com/webdoc/h5/im/default-icon.png" class='roomInfo-image'></image>
+      <image src="{{defaultAvatar}}" class='roomInfo-image'></image>
       <view class='roomInfo-content'>
         <view class='zhubo-announcement-title'>主播: {{roomInfo.creator}}</view>
         <view class='zhubo-announcement-content'>在线: {{roomInfo.onlineusercount}}</view>
@@ -93,7 +89,7 @@
   </view>
   <view wx:if="{{currentTab == 2}}">
     <view wx:for="{{onlineMember}}" wx:for-item="member" wx:key="member.account" class='online-item'>
-      <image src="{{member.avatar || 'https://yx-web.nos-hz.163yun.com/webdoc/h5/im/default-icon.png'}}" class='roomInfo-image border-cir'></image>
+      <image src="{{member.avatar.trim() || defaultAvatar}}" class='roomInfo-image border-cir'></image>
       <view class='roomInfo-content'>
         <view class='zhubo-announcement-title'>{{member.nick}}</view>
         <view class='zhubo-announcement-content'>{{member.type == 'guest' ? '游客' : ''}}</view>
