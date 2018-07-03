@@ -193,6 +193,9 @@ Page({
       }]
     })
   },
+  /**
+   * 添加图片消息到渲染队列中
+   */
   addImageToRender(msg) {
     // 添加到渲染队列
     let displayTimeHeader = formatTime(msg.time)
@@ -334,28 +337,10 @@ Page({
   scrollToBottom() {
     let self = this
     wx.createSelectorQuery().select('#recordWrapper').boundingClientRect(function (rect) {
-      console.log(rect)
-      // if (self.data.emojiFlag || self.data.moreFlag || self.data.focusFlag) {
-      //   wx.pageScrollTo({
-      //     scrollTop: rect.height + 550,
-      //     duration: 100
-      //   })
-      // } else {
-      //   wx.pageScrollTo({
-      //     scrollTop: rect.height + 100,
-      //     duration: 100
-      //   })
-      // }
-
-      // wx.pageScrollTo({
-      //   scrollTop: rect.height + 100,
-      //   duration: 100
-      // })
-      if (rect.height > self.data.messageWrapperMaxHeight) {
+      if (rect.bottom > self.data.messageWrapperMaxHeight) {
         self.setData({
-          scrollTop: rect.height - self.data.messageWrapperMaxHeight
+          scrollTop: 999999
         })
-        console.log(self.data.scrollTop)
       }
     }).exec()
   },
@@ -442,6 +427,22 @@ Page({
     this.sendRequest(text)
   },
   /**
+   * 选择相册图片
+   */
+  chooseImageToSend(e) {
+    let type = e.currentTarget.dataset.type
+    let self = this
+    self.setData({
+      moreFlag: false
+    })
+    wx.chooseImage({
+      sourceType: ['album'],
+      success: function (res) {
+        self.sendImageToNOS(res)
+      },
+    })
+  },
+  /**
    * 发送网络请求：发送文字
    */
   sendRequest(text) {
@@ -452,7 +453,6 @@ Page({
     app.globalData.chatroomInstance.sendText({
       text,
       done: (err, msg) => {
-        // 判断错误类型，并做相应处理
         if (err) {
           console.log(err)
           return
@@ -464,4 +464,60 @@ Page({
       }
     })
   },
+  /**
+   * 发送自定义消息-猜拳
+   */
+  sendFingerGuess() {
+    let self = this
+    self.setData({
+      moreFlag: false
+    })
+    let content = {
+      type: 1,
+      data: {
+        value: Math.ceil(Math.random() * 3)
+      }
+    }
+    app.globalData.chatroomInstance.sendCustomMsg({
+      content: JSON.stringify(content),
+      done: function (err, msg) {
+        if (err) {
+          console.log(err)
+          return
+        }
+        // 刷新界面
+        self.addCustomMsgToRender(msg)
+        // 滚动到底部
+        self.scrollToBottom()
+      }
+    })
+  },
+  /**
+   * 发送图片到nos
+   */
+  sendImageToNOS(res) {
+    wx.showLoading({
+      title: '发送中...',
+    })
+    let self = this
+    let tempFilePaths = res.tempFilePaths
+    for (let i = 0; i < tempFilePaths.length; i++) {
+      // 上传文件到nos
+      app.globalData.chatroomInstance.sendFile({
+        type: 'image',
+        wxFilePath: tempFilePaths[i],
+        done: function (err, msg) {
+          wx.hideLoading()
+          if (err) {
+            console.log(err)
+            return
+          }
+          // 刷新界面
+          self.addImageToRender(msg)
+          // 滚动到底部
+          self.scrollToBottom()
+        }
+      })
+    }
+  }
 })

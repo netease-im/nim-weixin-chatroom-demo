@@ -9,13 +9,11 @@
     <view class='swiper-tab-item {{currentTab == 1 ? "swiper-tab-item-on" : ""}}' data-current="1" catchtap='switchNav'>主播</view>
     <view class='swiper-tab-item {{currentTab == 2 ? "swiper-tab-item-on" : ""}}' data-current="2" catchtap='switchNav'>在线成员</view>
   </view>
-  <view wx:if="{{currentTab == 0}}" style="overflow:scroll;max-height:{{messageWrapperMaxHeight}}px;">
-    <view class='chatlist-content'>
-        <view class='chatroom-nocontent'>
-          --无更多记录--
-        </view>
+  <view wx:if="{{currentTab == 0}}">
+    <scroll-view id="recordWrapper" scroll-y="true" scroll-top="{{scrollTop}}" class='chatlist-content' style="overflow:scroll;max-height:{{messageWrapperMaxHeight}}px;">
+        <view class='chatroom-nocontent'>--无更多记录--</view>
         <!-- 消息记录 -->
-        <view class='record-wrapper' id="recordWrapper"> 
+        <view class='record-wrapper'> 
           <view wx:for="{{messageArr}}" wx:for-item="message" wx:key="{{message.time}}">
             <view class='record-chatting-item other' style='justify-content: {{message.type === "tip" ? "center" : "flex-start"}}' data-message="{{message}}">
               <view wx:if="{{message.type === 'memberEnter'}}" class='record-item-welcome'>欢迎 {{message.nick}} 进入房间</view>
@@ -50,28 +48,32 @@
                 <image src="{{iconBase64Map.iconAlbum}}" class='image'></image>
                 <text class='text'>相册</text>
               </view>
-              <view class='more-subcontent-item' catchtap='chooseImageOrVideo'>
+              <!-- <view class='more-subcontent-item' catchtap='chooseImageOrVideo'>
                 <image src="{{iconBase64Map.iconCapture}}" class='image'></image>
                 <text class='text'>拍摄</text>
               </view>
               <view class='more-subcontent-item' catchtap='sendTipMessage'>
                 <image src="{{iconBase64Map.iconTip}}" class='image'></image>
                 <text class='text'>Tip</text>
-              </view>
+              </view> -->
               <view class='more-subcontent-item' catchtap='sendFingerGuess'>
                 <image src="{{iconBase64Map.iconFingerGuess}}" class='image'></image>
-                <text class='text'>猜拳</text></view>
+                <text class='text'>猜拳</text>
+              </view>
+              <view class='more-subcontent-item'><view class='image' style='background-color: transparent;'></view><text class='text'></text></view>
+              <view class='more-subcontent-item'><view class='image' style='background-color: transparent;'></view><text class='text'></text></view>
             </view>
-            <view style='display:flex;justify-content: space-between;'>
-              <view class='more-subcontent-item' catchtap='choosePosition'>
+             <view style='display:flex;justify-content: space-between;'>
+              <!-- <view class='more-subcontent-item' catchtap='choosePosition'>
                 <image src="{{iconBase64Map.iconPosition}}" class='image'></image>
-                <text class='text'>位置</text></view>
+                <text class='text'>位置</text>
+              </view> -->
               <view class='more-subcontent-item'><view class='image' style='background-color: transparent;'></view><text class='text'></text></view>
               <view class='more-subcontent-item'><view class='image' style='background-color: transparent;'></view><text class='text'></text></view>
-            </view>
+            </view> 
           </view>
         </view>
-    </view>
+    </scroll-view>
   </view>
   <view wx:if="{{currentTab == 1}}">
     <view class='zhubo-wrapper1'>
