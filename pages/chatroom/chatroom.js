@@ -125,7 +125,7 @@ Page({
    * [{attach: {from,fromNick,gaged,tempMuteDuration,tempMuted,to:[],toNick:[],type},chatroomId,flow,from,custom,content,fromClientType,fromCustom,resend,idClient,status,text,time,type}]
    */
   onChatroomMsgs(msgs) {
-    console.log('onChatroomMsgs', msgs)
+    // console.log('onChatroomMsgs', msgs)
     let self = this
     msgs.map(msg => {
       switch (msg.type) {
@@ -313,7 +313,6 @@ Page({
    * 合并在线在线用户信息
    */
   mergeOnlineMember(memberArr) {
-    console.log(memberArr)
     let result = [...this.data.onlineMember]
     memberArr.map(member => {
       if (member.online == true) {

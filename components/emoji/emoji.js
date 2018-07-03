@@ -73,7 +73,6 @@ Component({
             cata.push('[删除]')
           }
         })
-        // console.log(result)
       }
       return result
     },
@@ -83,7 +82,6 @@ Component({
     emojiTap: function(e) {
       let emoji = e.target.dataset.emoji
       if (!emoji) return
-      // console.log(emoji)
       this.triggerEvent("EmojiClick", emoji)
     },
     /**

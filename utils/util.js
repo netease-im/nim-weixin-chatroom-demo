@@ -102,7 +102,6 @@ function generateFingerGuessImageFile(value) {
  * 处理图片富文本节点
  */
 function generateImageNode(file) {
-  // console.log(file)
   let width = 0, height = 0
   if (file.w > 250) {
     width = 200

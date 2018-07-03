@@ -28,7 +28,6 @@ Page({
       success: (res) => {
         const { data } = res
         if (data.res === 200) {
-          console.log(data.msg.list)
           this.setData({
             chatroomList: data.msg.list
           })
