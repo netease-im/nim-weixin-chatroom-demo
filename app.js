@@ -21,6 +21,7 @@ App({
     userInfo: null,
     pageConfig: pageConfig,
     chatroomList: [],
+    inChatroom: false, // 进入房间标志
     chatroomInstance: null
   }
 })

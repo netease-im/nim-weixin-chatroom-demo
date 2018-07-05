@@ -88,6 +88,7 @@ Page({
   onUnload() {
     app.globalData.chatroomInstance.destroy({
       done: () => {
+        app.globalData.inChatroom = false
         console.log('退出聊天室')
       }
     })

@@ -38,8 +38,19 @@ Page({
   },
   switchToChatRoom(e) {
     let chatroom = e.currentTarget.dataset.chatroom
-    wx.navigateTo({
-      url: `../chatroom/chatroom?roomid=${chatroom.roomid}&name=${chatroom.name}`,
-    })
+    if (app.globalData.inChatroom == true) {
+      wx.showToast({
+        title: '当前网络不佳，上次连接尚未断开',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      wx.navigateTo({
+        url: `../chatroom/chatroom?roomid=${chatroom.roomid}&name=${chatroom.name}`,
+        success: function () {
+          app.globalData.inChatroom = true
+        }
+      })
+    }
   }
 })
