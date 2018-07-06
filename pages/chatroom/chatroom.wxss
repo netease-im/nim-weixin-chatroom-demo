@@ -1,3 +1,7 @@
+.chatroom-container {
+  height: 100%;
+  position: relative;
+}
 .room-image {
   width: 100%;
 }
@@ -42,7 +46,7 @@
   width: 100%;
   background-color: #fff;
   border: 2rpx solid #ccc;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0; 
 }
@@ -124,6 +128,7 @@
 .record-wrapper {
   width: 100%;
   padding-top:10rpx;
+  padding-bottom:60rpx;
 }
 .record-chatting-item {
   width: 100%;

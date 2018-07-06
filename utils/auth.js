@@ -1,5 +1,5 @@
 
-const demoServer = 'http://home.netease.im/weixin'
+const demoServer = 'https://yunxin.163.com/weixin'
 
 const wxGetSession = (code) => new Promise((resolve, reject) => {
   wx.request({

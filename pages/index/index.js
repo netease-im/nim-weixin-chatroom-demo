@@ -29,10 +29,15 @@ Page({
     detail.sessionKey = app.globalData.sessionKey
     console.log(app.globalData.sessionKey)
     auth.wxUploadUserInfo(detail).then(() => {
-      wx.setStorageSync('userInfo', userInfo)
-      app.globalData.userInfo = userInfo
-      wx.redirectTo({
-        url: '/pages/home/home'
+      wx.setStorage({
+        key: "userInfo",
+        data: userInfo,
+        success: function() {
+          app.globalData.userInfo = userInfo
+          wx.redirectTo({
+            url: '/pages/home/home'
+          })
+        }
       })
     })
   }
