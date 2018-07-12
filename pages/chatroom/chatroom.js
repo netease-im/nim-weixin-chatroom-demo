@@ -7,6 +7,7 @@ Page({
     defaultAvatar: '', //用户默认头像
     currentTab: 0,//顶部当前索引
     roomInfo: {}, // 房间信息 {announcement, broadcasturl, createtime，creator，ext，name，onlineusercount，roomid，status}
+    ownerInfo: {}, // 主播信息 {account, avatar,blacked,chatroomId,custom,gaged,nick,online,tempMuted,tempMuteDuration,type,updateTime,valid}
     onlineMember: [], // 在线成员 [{account,avatar,nick,type}]
     iconBase64Map: {}, // base64 icon
     inputValue: '', // 发送的文本内容
@@ -107,6 +108,7 @@ Page({
           console.log(error)
           return
         }
+        console.log(obj)
         self.mergeOnlineMember(obj.members)
       }
     })
@@ -117,6 +119,7 @@ Page({
           console.log(error)
           return
         }
+        console.log(obj)
         self.mergeOnlineMember(obj.members)
       }
     })
@@ -126,7 +129,7 @@ Page({
    * [{attach: {from,fromNick,gaged,tempMuteDuration,tempMuted,to:[],toNick:[],type},chatroomId,flow,from,custom,content,fromClientType,fromCustom,resend,idClient,status,text,time,type}]
    */
   onChatroomMsgs(msgs) {
-    // console.log('onChatroomMsgs', msgs)
+    console.log('onChatroomMsgs', msgs)
     let self = this
     msgs.map(msg => {
       switch (msg.type) {
@@ -311,20 +314,46 @@ Page({
     }
   },
   /**
+   * 转化消息类型
+   */
+  converMemberType(memberType) {
+    switch(memberType) {
+      case 'owner': 
+        return '房主'
+      case 'manager':
+        return '管理员'
+      case 'restricted':
+        return '受限制, 被拉黑或者禁言'
+      case 'common': 
+        return '普通成员'
+      case 'guest':
+        return '游客'
+    }
+  },
+  /**
    * 合并在线在线用户信息
    */
   mergeOnlineMember(memberArr) {
     let result = [...this.data.onlineMember]
+    let ownerInfo = {}
     memberArr.map(member => {
+      // 在线成员
       if (member.online == true) {
         result.push(Object.assign({}, member, {
-          avatar: member.avatar
+          avatar: member.avatar,
+          type: this.converMemberType(member.type)
         }))
+      }
+      // 主播
+      if (member.type == 'owner') {
+        Object.assign(ownerInfo, member)
       }
     })
     this.setData({
-      onlineMember: result
+      onlineMember: result,
+      ownerInfo
     })
+    console.log(this.data.onlineMember)
   },
   /**
    * 阻止事件冒泡空函数

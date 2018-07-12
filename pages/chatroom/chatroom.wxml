@@ -36,9 +36,9 @@
   </view>
   <view wx:if="{{currentTab == 1}}">
     <view class='zhubo-wrapper1'>
-      <image src="{{defaultAvatar}}" class='roomInfo-image'></image>
+      <image src="{{ownerInfo.avatar || defaultAvatar}}" class='roomInfo-image'></image>
       <view class='roomInfo-content'>
-        <view class='zhubo-announcement-title'>主播: {{roomInfo.creator}}</view>
+        <view class='zhubo-announcement-title'>主播: {{ownerInfo.nick}}</view>
         <view class='zhubo-announcement-content'>在线: {{roomInfo.onlineusercount}}</view>
       </view>
     </view>
@@ -50,17 +50,17 @@
   </view>
   <view wx:if="{{currentTab == 2}}">
     <view wx:for="{{onlineMember}}" wx:for-item="member" wx:key="member.account" class='online-item'>
-      <image src="{{member.avatar.trim() || defaultAvatar}}" class='roomInfo-image border-cir'></image>
+       <image src="{{member.avatar || defaultAvatar}}" class='roomInfo-image border-cir'></image> 
       <view class='roomInfo-content'>
         <view class='zhubo-announcement-title'>{{member.nick}}</view>
-        <view class='zhubo-announcement-content'>{{member.type == 'guest' ? '游客' : ''}}</view>
+        <view class='zhubo-announcement-content'>{{member.type}}</view>
       </view>
     </view>
   </view>
 </view>
   </view>
           <!--底部输入框  -->
-        <view class='chatinput-wrapper' style='margin-bottom: {{focusFlag ? 20 : 0}}rpx;' catchtap='stopEventPropagation'>
+        <view wx:if="{{currentTab == 0}}" class='chatinput-wrapper' style='margin-bottom: {{focusFlag ? 20 : 0}}rpx;' catchtap='stopEventPropagation'>
           <view class='chatinput-content'>
             <input value='{{inputValue}}' focus='{{focusFlag}}' bindinput='inputChange' bindfocus='inputFocus' bindblur='inputBlur' bindconfirm='inputSend' class='chatinput-input'  placeholder="输入文字" confirm-type='send'></input>
             <image src='../../images/more.png' catchtap='toggleMore' class='chatinput-img fr'></image>

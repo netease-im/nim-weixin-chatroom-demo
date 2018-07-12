@@ -290,6 +290,7 @@
   width:80rpx;
   height:80rpx;
   margin-right:20rpx;
+  border-radius:50%;
 }
 .roomInfo-content {
   display: flex;
