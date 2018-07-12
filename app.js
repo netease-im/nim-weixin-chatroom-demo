@@ -22,6 +22,7 @@ App({
     pageConfig: pageConfig,
     chatroomList: [],
     inChatroom: false, // 进入房间标志
+    reconnectionAttempts: 0, // 重连次数
     chatroomInstance: null
   }
 })

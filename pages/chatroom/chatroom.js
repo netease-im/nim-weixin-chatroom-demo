@@ -15,7 +15,7 @@ Page({
     emojiFlag: false,//emoji键盘标志位
     moreFlag: false, // 更多功能标志
     messageArr: [], // 渲染的数据
-    animationData: {},
+    accountMap: {}, // 存储了账号map，目的是账号去重
     animation: null,
     scrollTop: 0,
     messageWrapperMaxHeight: null, // 消息列表容器最大高度
@@ -89,16 +89,13 @@ Page({
   onUnload() {
     app.globalData.chatroomInstance.destroy({
       done: () => {
+        app.globalData.chatroomInstance = null
         app.globalData.inChatroom = false
         console.log('退出聊天室')
       }
     })
   },
-  /**
-   * 连接上服务器
-   */
-  onChatroomConnect(chatroomInfo) {
-    // console.log('onChatroomConnect', chatroomInfo)
+  getChatroomMembers() {
     let self = this
     // 拉取成员信息
     app.globalData.chatroomInstance.getChatroomMembers({
@@ -108,7 +105,6 @@ Page({
           console.log(error)
           return
         }
-        console.log(obj)
         self.mergeOnlineMember(obj.members)
       }
     })
@@ -119,10 +115,16 @@ Page({
           console.log(error)
           return
         }
-        console.log(obj)
         self.mergeOnlineMember(obj.members)
       }
     })
+  },
+  /**
+   * 连接上服务器
+   */
+  onChatroomConnect(chatroomInfo) {
+    // console.log('onChatroomConnect', chatroomInfo)
+    this.getChatroomMembers()
   },
   /**
    * 收到消息
@@ -171,13 +173,30 @@ Page({
    * 即将重连
    */
   onChatroomWillReconnect(obj) {
-    console.log('onwillreconnect', obj);
+    app.globalData.reconnectionAttempts++
+    if (app.globalData.reconnectionAttempts == 10) {
+      app.globalData.reconnectionAttempts
+      this.toastAndBack()
+    }
+    console.log(`onwillreconnect-${app.globalData.reconnectionAttempts}`, obj);
   },
   /**
    * 已经断开连接
    */
   onChatroomDisconnect(error) {
     console.log('ondisconnect', error);
+    this.toastAndBack()
+  },
+  toastAndBack() {
+    wx.showToast({
+      title: '连接已断开,即将返回',
+      duration: 2000,
+      success: function () {
+        wx.navigateBack({
+          delta: 1
+        })
+      }
+    })
   },
   /**
    * 添加文本(包含emoji)消息到渲染队列中
@@ -301,16 +320,44 @@ Page({
       }]
     })
   },
+  refreshRoomInfo(roomInfo) {
+    this.setData({
+      roomInfo: Object.assign({}, this.data.roomInfo, {
+        onlineusercount: roomInfo.onlineMemberNum
+      })
+    })
+  },
   /**
    * nav点击
    */
   switchNav(e) {
+    let self = this
     if (this.data.currentTab == e.currentTarget.dataset.current) {
       return
     } else {
       this.setData({
         currentTab: e.currentTarget.dataset.current
       })
+      if (e.currentTarget.dataset.current == 2) {
+        // 清除上次数据
+        self.setData({
+          accountMap: {},
+          onlineMember: []
+        })
+        // 刷新在线成员
+        this.getChatroomMembers()
+      } else if (e.currentTarget.dataset.current == 1) {
+        // 刷新在线人数
+        app.globalData.chatroomInstance.getChatroom({
+          done: function(err, obj) {
+            if(err) {
+              console.log(err)
+              return
+            }
+            self.refreshRoomInfo(obj.chatroom)
+          }
+        });
+      }
     }
   },
   /**
@@ -335,10 +382,12 @@ Page({
    */
   mergeOnlineMember(memberArr) {
     let result = [...this.data.onlineMember]
+    let accountMap = Object.assign({}, this.data.accountMap) // 目的是去重
     let ownerInfo = {}
     memberArr.map(member => {
       // 在线成员
-      if (member.online == true) {
+      if (member.online == true && !accountMap[member.account]) {
+        accountMap[member.account] = member.account
         result.push(Object.assign({}, member, {
           avatar: member.avatar,
           type: this.converMemberType(member.type)
@@ -349,7 +398,9 @@ Page({
         Object.assign(ownerInfo, member)
       }
     })
+    
     this.setData({
+      accountMap,
       onlineMember: result,
       ownerInfo
     })

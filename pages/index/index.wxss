@@ -8,10 +8,13 @@
 .label {
   margin: 8rpx 0;
   font-size: 42rpx;
-  color: #666;
   text-align: center;
+  color: #fff;
+  font-weight:100;
 }
 
 .entry {
   margin-top: 20rpx;
+  color:#0091e4;
+  width:60%;
 }
