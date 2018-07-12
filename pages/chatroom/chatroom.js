@@ -56,6 +56,7 @@ Page({
           appKey: app.globalData.pageConfig.appkey,
           account: app.globalData.account,
           token: app.globalData.password,
+          reconnectionAttempts: 10,
           chatroomId: options.roomid,
           chatroomAddresses: addr,
           onconnect: self.onChatroomConnect,
@@ -168,16 +169,17 @@ Page({
    */
   onChatroomError(error, obj) {
     console.log('onerror', error, obj);
+    this.toastAndBack()
   },
   /**
    * 即将重连
    */
   onChatroomWillReconnect(obj) {
-    app.globalData.reconnectionAttempts++
-    if (app.globalData.reconnectionAttempts == 10) {
-      app.globalData.reconnectionAttempts
-      this.toastAndBack()
-    }
+    // app.globalData.reconnectionAttempts++
+    // if (app.globalData.reconnectionAttempts == 10) {
+    //   app.globalData.reconnectionAttempts = 0
+    //   this.toastAndBack()
+    // }
     console.log(`onwillreconnect-${app.globalData.reconnectionAttempts}`, obj);
   },
   /**
