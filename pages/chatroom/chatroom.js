@@ -88,13 +88,18 @@ Page({
    * 页面卸载清除聊天室实例
    */
   onUnload() {
-    app.globalData.chatroomInstance.destroy({
-      done: () => {
-        app.globalData.chatroomInstance = null
-        app.globalData.inChatroom = false
-        console.log('退出聊天室')
-      }
-    })
+    if (app.globalData.chatroomInstance) {
+      app.globalData.chatroomInstance.destroy({
+        done: () => {
+          app.globalData.chatroomInstance = null
+          app.globalData.inChatroom = false
+          console.log('退出聊天室')
+        }
+      })
+    } else {
+      app.globalData.chatroomInstance = null
+      app.globalData.inChatroom = false
+    }
   },
   pageTimer: null,
   getChatroomMembers() {
@@ -188,7 +193,7 @@ Page({
    */
   onChatroomDisconnect(error) {
     console.log('ondisconnect', error);
-    this.toastAndBack()
+    // this.toastAndBack()
   },
   toastAndBack() {
     clearTimeout(this.pageTimer)
