@@ -96,6 +96,7 @@ Page({
       }
     })
   },
+  pageTimer: null,
   getChatroomMembers() {
     let self = this
     // 拉取成员信息
@@ -190,15 +191,18 @@ Page({
     this.toastAndBack()
   },
   toastAndBack() {
-    wx.showToast({
-      title: '连接已断开,即将返回',
-      duration: 2000,
-      success: function () {
-        wx.navigateBack({
-          delta: 1
-        })
-      }
-    })
+    clearTimeout(this.pageTimer)
+    this.pageTimer = setTimeout(() => {
+      wx.showToast({
+        title: '连接已断开,即将返回',
+        duration: 2000,
+        success: function () {
+          wx.redirectTo({
+            url: '/pages/home/home',
+          })
+        }
+      })
+    }, 200)
   },
   /**
    * 添加文本(包含emoji)消息到渲染队列中
