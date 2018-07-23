@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container center" style='background-color: #0091e4'>
   <view>
-    <image class="logo" src="https://yx-web.nos.netease.com/webdoc/h5/im/logo.png" />
+    <image class="logo" src="/images/yunxin-logo.png" />
     <view class="label">( 聊天室 )</view>
   </view>
   <button class="entry" wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 进入聊天室 </button>

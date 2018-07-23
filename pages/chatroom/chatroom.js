@@ -130,7 +130,6 @@ Page({
    * 连接上服务器
    */
   onChatroomConnect(chatroomInfo) {
-    // console.log('onChatroomConnect', chatroomInfo)
     this.getChatroomMembers()
   },
   /**
@@ -138,7 +137,6 @@ Page({
    * [{attach: {from,fromNick,gaged,tempMuteDuration,tempMuted,to:[],toNick:[],type},chatroomId,flow,from,custom,content,fromClientType,fromCustom,resend,idClient,status,text,time,type}]
    */
   onChatroomMsgs(msgs) {
-    console.log('onChatroomMsgs', msgs)
     let self = this
     msgs.map(msg => {
       switch (msg.type) {
@@ -181,11 +179,6 @@ Page({
    * 即将重连
    */
   onChatroomWillReconnect(obj) {
-    // app.globalData.reconnectionAttempts++
-    // if (app.globalData.reconnectionAttempts == 10) {
-    //   app.globalData.reconnectionAttempts = 0
-    //   this.toastAndBack()
-    // }
     console.log(`onwillreconnect-${app.globalData.reconnectionAttempts}`, obj);
   },
   /**
@@ -193,7 +186,6 @@ Page({
    */
   onChatroomDisconnect(error) {
     console.log('ondisconnect', error);
-    // this.toastAndBack()
   },
   toastAndBack() {
     clearTimeout(this.pageTimer)
@@ -394,7 +386,6 @@ Page({
   mergeOnlineMember(memberArr) {
     let result = [...this.data.onlineMember]
     let accountMap = Object.assign({}, this.data.accountMap) // 目的是去重
-    let ownerInfo = {}
     memberArr.map(member => {
       // 在线成员
       if (member.online == true && !accountMap[member.account]) {
@@ -406,14 +397,15 @@ Page({
       }
       // 主播
       if (member.type == 'owner') {
-        Object.assign(ownerInfo, member)
+        this.setData({
+          ownerInfo: Object.assign({}, member)
+        })
       }
     })
     
     this.setData({
       accountMap,
-      onlineMember: result,
-      ownerInfo
+      onlineMember: result
     })
     console.log(this.data.onlineMember)
   },
