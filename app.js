@@ -7,7 +7,12 @@ App({
     auth.wxLogin().then(data => {
       this.globalData.openid = data.openid
       this.globalData.sessionKey = data.session_key
-      const account = data.openid.toLowerCase()
+      let account = '1'
+      if (data.openid) {
+        account = data.openid.toLowerCase()
+      } else {
+        account = (Math.random().toFixed(3) + '').replace('0.', '')
+      }
       this.globalData.account = account
       console.log(`wx account ${account}`)
     })
