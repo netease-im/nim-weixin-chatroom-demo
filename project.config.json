@@ -11,9 +11,9 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.1",
-	"appid": "wxb14ebaf6a7190d49",
-	"projectname": "nim-chatroom-demo",
+	"libVersion": "1.9.98",
+	"appid": "wxa916d43a91b21e5a",
+	"projectname": "chatroomdemo",
 	"isGameTourist": false,
 	"condition": {
 		"search": {

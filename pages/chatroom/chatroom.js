@@ -75,7 +75,8 @@ Page({
         duration: 1000,
         timingFunction: 'ease',
       }),
-      messageWrapperMaxHeight: wx.getSystemInfoSync().windowHeight - 275 - 40,
+      messageWrapperMaxHeight: wx.getSystemInfoSync().windowHeight - 40 - 54,
+      // messageWrapperMaxHeight: wx.getSystemInfoSync().windowHeight - 275 - 40,
       defaultAvatar: app.globalData.pageConfig.defaultAvatar,
       iconBase64Map: iconBase64Map,
       roomInfo: Object.assign({}, app.globalData.chatroomList[charroomImageIndex], {
@@ -130,6 +131,7 @@ Page({
    * 连接上服务器
    */
   onChatroomConnect(chatroomInfo) {
+    // console.log('onChatroomConnect', chatroomInfo)
     this.getChatroomMembers()
   },
   /**
@@ -137,6 +139,7 @@ Page({
    * [{attach: {from,fromNick,gaged,tempMuteDuration,tempMuted,to:[],toNick:[],type},chatroomId,flow,from,custom,content,fromClientType,fromCustom,resend,idClient,status,text,time,type}]
    */
   onChatroomMsgs(msgs) {
+    console.log('onChatroomMsgs', msgs)
     let self = this
     msgs.map(msg => {
       switch (msg.type) {
@@ -179,6 +182,11 @@ Page({
    * 即将重连
    */
   onChatroomWillReconnect(obj) {
+    // app.globalData.reconnectionAttempts++
+    // if (app.globalData.reconnectionAttempts == 10) {
+    //   app.globalData.reconnectionAttempts = 0
+    //   this.toastAndBack()
+    // }
     console.log(`onwillreconnect-${app.globalData.reconnectionAttempts}`, obj);
   },
   /**
@@ -186,6 +194,7 @@ Page({
    */
   onChatroomDisconnect(error) {
     console.log('ondisconnect', error);
+    // this.toastAndBack()
   },
   toastAndBack() {
     clearTimeout(this.pageTimer)
@@ -407,7 +416,6 @@ Page({
       accountMap,
       onlineMember: result
     })
-    console.log(this.data.onlineMember)
   },
   /**
    * 阻止事件冒泡空函数
