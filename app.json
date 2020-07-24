@@ -10,5 +10,6 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "云信聊天室DEMO",
     "navigationBarTextStyle": "black"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
