@@ -1,4 +1,4 @@
-import Chatroom from '../../vendor/NIM_Web_Chatroom_v5.4.0.js'
+import Chatroom from '../../vendor/NIM_Web_Chatroom_miniapp_v8.7.0.js'
 import * as iconBase64Map from '../../utils/imageBase64.js'
 import { formatTime, generateRichTextNode, generateImageNode, generateFingerGuessImageFile } from '../../utils/util.js'
 let app = getApp()
